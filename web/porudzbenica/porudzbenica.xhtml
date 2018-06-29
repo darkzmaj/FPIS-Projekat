@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head>
+        <title>Porudzbenica</title>
+    </head>
+
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name = "sadrzaj">
+                <h:form>
+                    <p:dataTable id ="dtPorudzbenica" value = "#{PorudzbenicaLista.list}" var = "p" >
+
+                        <p:column headerText = "Sifra" filterBy="#{p.porID}" filterMatchMode="exact" style="width:130px">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.porID}" />
+                            </div>
+                        </p:column >
+
+                        <p:column headerText = "Porucilac" filterBy="#{p.nazivPorucioca}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.nazivPorucioca}" /></div>
+                        </p:column>
+
+                        <p:column headerText = "Mesto isporuke" filterBy="#{p.mesto}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.mesto}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Datum izdavanja" filterBy="#{p.datumI}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.datumI}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Uslovi isporuke" filterBy="#{p.uslovI}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.uslovI}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Uslovi placanja" filterBy="#{p.uslovP}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.uslovP}" />
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <br></br>
+
+                    <p:growl id="sacuvajGrowl" showDetail="true" sticky="false"/>  
+
+                    <h:panelGrid columns="12" cellpadding="10">  
+                        <p:outputLabel for="id" value="Sifra:" />   
+                        <p:inputText id="id" value="#{porudzbenicaBean.porID}" required="true" style="width:130px" />  
+
+                        <p:outputLabel for="naziv" value="Naziv:" />   
+                        <p:inputText id="naziv" value="#{porudzbenicaBean.nazivPorucioca}" required="false" />
+
+                        <p:outputLabel for="mesto" value="Mesto:" />   
+                        <p:inputText id="mesto" value="#{porudzbenicaBean.mesto}" required="false" />
+
+                        <p:outputLabel for="datumI" value="Datum izdavanja" />   
+                        <p:inputText id="datumI" value="#{porudzbenicaBean.datumI}" required="false" />
+
+                        <p:outputLabel for="uslovI" value="Uslov isporuke" />   
+                        <p:inputText id="uslovI" value="#{porudzbenicaBean.uslovI}" required="false" />
+
+                        <p:outputLabel for="uslovP" value="Uslov placanja" />   
+                        <p:inputText id="uslovP" value="#{porudzbenicaBean.uslovP}" required="false" />
+
+
+                    </h:panelGrid>  
+
+                    <h:panelGrid columns="3" cellpadding="15">
+                        <p:commandButton value="Sacuvaj porudzbenicu" actionListener="#{porudzbenicaBean.dodajLista()}"  update="sacuvajGrowl" /> 
+                        <p:commandButton value="Izmeni porudzbenicu" actionListener="#{porudzbenicaBean.izmeniLista()}" update="sacuvajGrowl" /> 
+                        <p:commandButton value="Obrisi porudzbenicu" actionListener="#{porudzbenicaBean.obrisiLista()}" update="sacuvajGrowl"/> 
+                        <p:commandButton value="Sacuvaj stvarno" actionListener="#{porudzbenicaBean.sacuvajStvarno()}"  update="sacuvajGrowl" /> 
+                        <p:commandButton value="Izmeni stvarno" actionListener="#{porudzbenicaBean.izmeniStvarno()}" update="sacuvajGrowl" /> 
+                        <p:commandButton value="Obrisi stvarno" actionListener="#{porudzbenicaBean.obrisiStvarno()}" update="sacuvajGrowl"/>
+                    </h:panelGrid>  
+
+
+                    <!-- OVDE POCINJU STAVKE -->
+                    <br></br>
+                    <br></br>
+                    <br></br>
+
+
+                    <p:dataTable id ="dtStavke" value = "#{StavkeLista.list}" var = "p" >
+
+                        <p:column headerText = "Porudzbenica" filterBy="#{p.porID}" filterMatchMode="exact" style="width:130px">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.porID}" />
+                            </div>
+                        </p:column >
+
+                        <p:column headerText = "Redni Broj" filterBy="#{p.redBr}" filterMatchMode="contains" style="width:130px">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.redBr}" /></div>
+                        </p:column>
+
+                        <p:column headerText = "Proizvod" filterBy="#{p.proizvod}" filterMatchMode="contains" style="width:250px">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.proizvod}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Kolicina" filterBy="#{p.kolicina}" filterMatchMode="contains" >
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.kolicina}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Datum isporuke" filterBy="#{p.datumIsporuke}" filterMatchMode="contains" >
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.datumIsporuke}" />
+                            </div>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                    <p:growl id="sacuvajGrowlStavke" showDetail="true" sticky="false"/>  
+
+                    <h:panelGrid columns="12" cellpadding="10">  
+                        <p:outputLabel for="porudz" value="Por ID" />   
+                        <p:inputText id="porudz" value="#{stavkeBean.porID}" required="true" style="width:130px" />  
+
+                        <p:outputLabel for="redbr" value="Red br" />   
+                        <p:inputText id="redbr" value="#{stavkeBean.redBr}" required="true" />
+
+                        <p:outputLabel for="proizvod" value="Proizvod" />   
+                        <p:inputText id="proizvod" value="#{stavkeBean.proizvod}" required="false" />
+
+                        <p:outputLabel for="kolicina" value="Kolicina" />   
+                        <p:inputText id="kolicina" value="#{stavkeBean.kolicina}" required="false" />
+
+                        <p:outputLabel for="datumIspor" value="Datum isporuke" />   
+                        <p:inputText id="datumIspor" value="#{stavkeBean.datumIsporuke}" required="false" />
+
+
+                    </h:panelGrid>  
+
+                    <h:panelGrid columns="3" cellpadding="15">
+                        <p:commandButton value="Dodaj stavku" actionListener="#{stavkeBean.unosLista()}"  update="sacuvajGrowlStavke" /> 
+                        <p:commandButton value="Izmeni stavku" actionListener="#{stavkeBean.izmenaLista()}" update="sacuvajGrowlStavke" /> 
+                        <p:commandButton value="Obrisi stavku" actionListener="#{stavkeBean.brisanjeLista()}" update="sacuvajGrowlStavke"/> 
+                        <p:commandButton value="Sacuvaj stvarno" actionListener="#{stavkeBean.sacuvajStvarno()}"  update="sacuvajGrowlStavke" /> 
+                        <p:commandButton value="Izmeni stvarno" actionListener="#{stavkeBean.izmeniStvarno()}" update="sacuvajGrowlStavke" /> 
+                        <p:commandButton value="Obrisi stvarno" actionListener="#{stavkeBean.obrisiStvarno()}" update="sacuvajGrowlStavke"/> 
+                    </h:panelGrid>  
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

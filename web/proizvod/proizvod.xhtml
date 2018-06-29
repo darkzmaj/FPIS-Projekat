@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Proizvod</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name = "sadrzaj">
+                <h:form>
+
+
+                    <p:dataTable id ="dtProizvod" value = "#{ProizvodLista.list}" var = "p" >
+
+                        <p:column headerText = "ID" filterBy="#{p.proizvodID}" filterMatchMode="exact" style="width:130px">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.proizvodID}" />
+                            </div>
+                        </p:column >
+
+                        <p:column headerText = "Naziv" filterBy="#{p.naziv}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.naziv}" /></div>
+                        </p:column>
+
+                        <p:column headerText = "Opis" filterBy="#{p.opis}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.opis}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Cena" filterBy="#{p.cena}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.cena}" />
+                            </div>
+                        </p:column>
+
+                        <p:column headerText = "Jedinica mere" filterBy="#{p.jedMere}" filterMatchMode="contains">
+                            <div style="text-align: center;">
+                                <p:outputLabel value = "#{p.jedMere}" />
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <br></br>
+
+                    <p:growl id="sacuvajGrowl" showDetail="true" sticky="false"/>  
+
+                    <h:panelGrid columns="2" cellpadding="15">  
+                        <p:outputLabel for="id" value="Sifra:" />   
+                        <p:inputText id="id" value="#{proizvodBean.proizvodID}" required="true" />  
+
+                        <p:outputLabel for="naziv" value="Naziv:" />   
+                        <p:inputText id="naziv" value="#{proizvodBean.naziv}" required="false" />
+
+                        <p:outputLabel for="opis" value="Opis proizvoda:" />   
+                        <p:inputText id="opis" value="#{proizvodBean.opis}" required="false" />
+
+                        <p:outputLabel for="cena" value="Cena:" />   
+                        <p:inputText id="cena" value="#{proizvodBean.cena}" required="false" />
+
+                        <p:outputLabel for="comboBox" value="Jedinica Mere:" />
+                        <p:selectOneMenu id="comboBox" value="#{proizvodBean.jedMere}" style="width:160px">
+                            <f:selectItem itemLabel="Izaberi" itemValue="Nepoznato" />
+                            <f:selectItem itemLabel="Kilogram" itemValue="Kilogram" />
+                            <f:selectItem itemLabel="Metar" itemValue="Metar" />
+                            <f:selectItem itemLabel="Komad" itemValue="Komad" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>  
+
+                    <h:panelGrid columns="3" cellpadding="15">
+                        <p:commandButton value="Sacuvaj" actionListener="#{proizvodBean.dodajProizvodUListu()}"  update="sacuvajGrowl" /> 
+                        <p:commandButton value="Izmeni" actionListener="#{proizvodBean.izmeniProizvodLista()}" update="sacuvajGrowl" /> 
+                        <p:commandButton value="Obrisi" actionListener="#{proizvodBean.obrisiProizvodLista()}" update="sacuvajGrowl"/> 
+                        <p:commandButton value="Sacuvaj unose" actionListener="#{proizvodBean.sacuvajStvarno()}"/> 
+                        <p:commandButton value="Sacuvaj izmene" actionListener="#{proizvodBean.izmeniStvarno()}"/> 
+                        <p:commandButton value="Sacuvaj brisanja" actionListener="#{proizvodBean.obrisiStvarno()}"/> 
+                    </h:panelGrid>  
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
